@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/markbosire/gitops-repo
+    repoURL: https://github.com/gnanieswar195/gitops-repo.git
     path: nginx-manifests
     targetRevision: HEAD
   destination:
