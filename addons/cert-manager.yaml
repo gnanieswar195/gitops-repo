@@ -4,6 +4,8 @@ metadata:
   name: cert-manager
   namespace: argocd
 spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: false  
   generators:
     - clusters:
         selector:

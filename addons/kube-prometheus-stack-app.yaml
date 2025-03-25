@@ -4,6 +4,8 @@ metadata:
   name: kube-prometheus-stack
   namespace: argocd
 spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: false  
   generators:
     - clusters:
         selector:
