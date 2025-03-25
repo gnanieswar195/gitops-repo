@@ -21,12 +21,6 @@ spec:
         helm:
           values: |
             installCRDs: true
-            securityContext:
-              fsGroup: 1001
-            resources:
-              requests:
-                cpu: 100m
-                memory: 128Mi
       destination:
         server: https://kubernetes.default.svc  # Add this line to specify the destination server
         namespace: cert-manager

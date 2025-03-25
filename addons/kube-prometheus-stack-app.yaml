@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: longhorn
+  name: kube-prometheus-stack
   namespace: argocd
 spec:
   generators:
@@ -11,21 +11,19 @@ spec:
             environment: dev
   template:
     metadata:
-      name: 'longhorn'
+      name: 'kube-prometheus-stack'
     spec:
       project: default
       source:
-        chart: longhorn
-        repoURL: https://charts.longhorn.io 
-        targetRevision: 1.8.1
+        chart: kube-prometheus-stack
+        repoURL: https://prometheus-community.github.io/helm-charts
+        targetRevision: 55.4.0
         helm:
-          values: |
-            serviceAccount:
-              create: true
-              name: longhorn-service-account        
+          valueFiles:
+            - values.yaml
       destination:
         server: https://kubernetes.default.svc  # Add this line to specify the destination server
-        namespace: longhorn-system
+        namespace: monitoring
       syncPolicy:
         automated: {}
         syncOptions:

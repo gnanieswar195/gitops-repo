@@ -1,0 +1,96 @@
+nameOverride: ""
+namespaceOverride: ""
+
+defaultRules:
+  create: true
+
+alertmanager:
+  enabled: true
+  serviceMonitor:
+    selfMonitor: true
+  alertmanagerSpec:
+    resources:
+      requests:
+        memory: 100Mi
+      limits:
+        memory: 200Mi
+
+grafana:
+  enabled: true
+  defaultDashboardsEnabled: true
+  defaultDashboardsTimezone: utc
+  adminPassword: prom-operator
+  sidecar:
+    dashboards:
+      enabled: true
+      searchNamespace: ALL
+    datasources:
+      enabled: true
+      defaultDatasourceEnabled: true
+  serviceMonitor:
+    enabled: true
+
+# Kubernetes components monitoring
+kubeApiServer:
+  enabled: true
+
+kubelet:
+  enabled: true
+  namespace: kube-system
+
+kubeControllerManager:
+  enabled: true
+
+coreDns:
+  enabled: true
+
+kubeEtcd:
+  enabled: true
+
+kubeScheduler:
+  enabled: true
+
+kubeProxy:
+  enabled: true
+
+kubeStateMetrics:
+  enabled: true
+
+nodeExporter:
+  enabled: true
+
+prometheusOperator:
+  enabled: true
+  serviceMonitor:
+    selfMonitor: true
+  resources: 
+    limits:
+      cpu: 100m
+      memory: 100Mi
+    requests:
+      cpu: 50m
+      memory: 50Mi
+
+prometheus:
+  enabled: true
+  serviceMonitor:
+    selfMonitor: true
+  prometheusSpec:
+    # Critical settings from the article
+    ruleSelectorNilUsesHelmValues: false
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    probeSelectorNilUsesHelmValues: false
+    scrapeConfigSelectorNilUsesHelmValues: false
+    
+    retention: 10d
+    resources:
+      requests:
+        memory: 200Mi
+      limits:
+        memory: 400Mi
+    securityContext:
+      runAsGroup: 2000
+      runAsNonRoot: true
+      runAsUser: 1000
+      fsGroup: 2000
