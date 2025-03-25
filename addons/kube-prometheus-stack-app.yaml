@@ -7,8 +7,13 @@ spec:
   generators:
     - clusters:
         selector:
-          matchLabels:
-            environment: dev
+          matchExpressions:
+            - key: enable_kube_prometheus_stack
+              operator: In
+              values: ["true"]
+            - key: environment
+              operator: In
+              values: ["dev", "prod"]  
   template:
     metadata:
       name: 'kube-prometheus-stack'
