@@ -7,8 +7,13 @@ spec:
   generators:
     - clusters:
         selector:
-          matchLabels:
-            environment: dev
+          matchExpressions:
+            - key: enable_cert_manager
+              operator: In
+              values: ["true"]
+            - key: environment
+              operator: In
+              values: ["dev", "prod"]     
   template:
     metadata:
       name: 'cert-manager'

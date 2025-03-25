@@ -17,8 +17,9 @@ locals {
 
   # OSS addons configuration
   oss_addons = {
-    enable_metrics_server = false
-    enable_kube_prometheus_stack = false
+    enable_metrics_server = true
+    enable_kube_prometheus_stack = true
+    enable_cert_manager = false
   }
   
   # Merge all addon categories
