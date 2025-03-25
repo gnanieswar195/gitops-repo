@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: nginx-ingress
+  namespace: argocd
+spec:
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            environment: dev
+  template:
+    metadata:
+      name: 'nginx-ingress'
+    spec:
+      project: default
+      source:
+        chart: nginx-ingress
+        repoURL: https://helm.nginx.com/stable
+        targetRevision: 2.0.1
+      destination:
+        server: https://kubernetes.default.svc  # Add this line to specify the destination server
+        namespace: gnani
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true  # This handles large CRDs
+        
