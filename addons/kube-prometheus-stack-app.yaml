@@ -27,7 +27,7 @@ spec:
         targetRevision: 55.4.0
         helm:
           valueFiles:
-            - prometheus-values.yaml
+            - values.yaml
       destination:
         server: https://kubernetes.default.svc  # Add this line to specify the destination server
         namespace: monitoring
