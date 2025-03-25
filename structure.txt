@@ -1,0 +1,77 @@
+.
+├── .gitignore
+├── README.md
+├── addons
+│   ├── cert-manager.yaml
+│   ├── kube-prometheus-stack-app.yaml
+│   ├── metrics-server.yaml
+│   └── values.yaml
+├── apps
+│   ├── addons.yaml
+│   ├── nginx.yaml
+│   └── workloads.yaml
+├── k8s
+│   ├── apache2.yaml
+│   ├── game-2048.yaml
+│   ├── hello-world
+│   │   └── hello-world.yaml
+│   └── nginx.yaml
+├── nginx-manifests
+│   ├── deployment.yaml
+│   └── service.yaml
+├── structure.txt
+└── terraform
+    ├── .terraform
+    │   ├── modules
+    │   │   ├── gitops_bridge
+    │   │   │   ├── .gitignore
+    │   │   │   ├── .pre-commit-config.yaml
+    │   │   │   ├── .tfsec.yaml
+    │   │   │   ├── CODEOWNERS
+    │   │   │   ├── LICENSE
+    │   │   │   ├── NOTICE.txt
+    │   │   │   ├── README.md
+    │   │   │   ├── charts
+    │   │   │   │   └── resources
+    │   │   │   │       ├── .helmignore
+    │   │   │   │       ├── Chart.yaml
+    │   │   │   │       ├── templates
+    │   │   │   │       │   └── resources.yaml
+    │   │   │   │       └── values.yaml
+    │   │   │   ├── main.tf
+    │   │   │   ├── modules
+    │   │   │   │   └── README.md
+    │   │   │   ├── outputs.tf
+    │   │   │   ├── tests
+    │   │   │   │   └── complete
+    │   │   │   │       ├── README.md
+    │   │   │   │       ├── bootstrap
+    │   │   │   │       │   ├── addons.yaml
+    │   │   │   │       │   └── workloads.yaml
+    │   │   │   │       ├── destroy.sh
+    │   │   │   │       ├── main.tf
+    │   │   │   │       ├── outputs.tf
+    │   │   │   │       ├── variables.tf
+    │   │   │   │       └── versions.tf
+    │   │   │   ├── variables.tf
+    │   │   │   └── versions.tf
+    │   │   └── modules.json
+    │   └── providers
+    │       └── registry.terraform.io
+    │           └── hashicorp
+    │               ├── helm
+    │               │   └── 2.17.0
+    │               │       └── linux_amd64
+    │               │           ├── LICENSE.txt
+    │               │           └── terraform-provider-helm_v2.17.0_x5
+    │               └── kubernetes
+    │                   └── 2.36.0
+    │                       └── linux_amd64
+    │                           ├── LICENSE.txt
+    │                           └── terraform-provider-kubernetes_v2.36.0_x5
+    ├── .terraform.lock.hcl
+    ├── main.tf
+    ├── terraform.tfstate
+    └── terraform.tfstate.backup
+
+25 directories, 49 files

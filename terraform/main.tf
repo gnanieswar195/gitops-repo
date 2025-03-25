@@ -49,7 +49,6 @@ locals {
   
   # Define ArgoCD applications - including the addons and workloads ApplicationSet
   argocd_apps = {
-    #nginx = file("${path.module}/../apps/nginx.yaml")
     addons = file("${path.module}/../apps/addons.yaml") 
     workloads = file("${path.module}/../apps/workloads.yaml")
   }
