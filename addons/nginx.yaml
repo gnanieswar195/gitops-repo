@@ -15,7 +15,7 @@ spec:
     spec:
       project: default
       source:
-        chart: nginx
+        chart: bitnami/nginx
         repoURL: https://charts.bitnami.com/bitnami
         targetRevision: 19.0.2
       destination:
