@@ -21,6 +21,8 @@ spec:
         repoURL: 'https://github.com/gnanieswar195/gitops-repo.git'
         path: 'k8s'
         targetRevision: 'main'
+        directory:
+          recurse: true
       destination:
         name: '{{name}}'
       syncPolicy:
