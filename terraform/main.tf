@@ -24,7 +24,7 @@ locals {
   addons = merge(
     local.oss_addons,
     {
-      kubernetes_version = "1.32" # Add the k8s version you're using
+      kubernetes_version = "1.31" # Add the k8s version you're using
     }
   )
   

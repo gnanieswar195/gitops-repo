@@ -20,7 +20,7 @@ spec:
         targetRevision: 1.17.1
       destination:
         server: https://kubernetes.default.svc  # Add this line to specify the destination server
-        namespace: monitoring
+        namespace: cert-manager
       syncPolicy:
         automated: {}
         syncOptions:
