@@ -30,19 +30,28 @@ locals {
   )
   
   # Metadata for addons
-  addons_metadata = {
+  addons_metadata = merge( 
+  {
     cluster_name = local.cluster_name
     environment  = local.environment
     addons_repo_url = local.gitops_repo
     addons_repo_basepath = ""
     addons_repo_path = "addons"
     addons_repo_revision = "main"
+  },
+  {
+    workload_repo_url      = local.gitops_repo
+    workload_repo_basepath = ""
+    workload_repo_path     = "k8s"
+    workload_repo_revision = "main"
   }
+  )
   
-  # Define ArgoCD applications - including the addons ApplicationSet
+  # Define ArgoCD applications - including the addons and workloads ApplicationSet
   argocd_apps = {
-    nginx = file("${path.module}/../apps/nginx.yaml")
-    addons = file("${path.module}/../apps/addons.yaml")  # Important - this is needed
+    #nginx = file("${path.module}/../apps/nginx.yaml")
+    addons = file("${path.module}/../apps/addons.yaml") 
+    workloads = file("${path.module}/../apps/workloads.yaml")
   }
 }
 
@@ -52,15 +61,8 @@ module "gitops_bridge" {
   cluster = {
     cluster_name = local.cluster_name
     environment  = local.environment
-    metadata     = merge(
-      {
-        repo_url  = local.gitops_repo
-        repo_path = "apps"
-      },
-      local.addons_metadata
-    )
-    addons = local.addons
-  }
-  
+    metadata     = local.addons_metadata
+    addons       = local.addons
+}
   apps = local.argocd_apps
 }

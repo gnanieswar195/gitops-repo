@@ -4,6 +4,8 @@ metadata:
   name: cluster-addons
   namespace: argocd
 spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true  
   generators:
     - clusters:
         selector:
@@ -11,7 +13,7 @@ spec:
             environment: dev
   template:
     metadata:
-      name: 'bootstrap-addons'
+      name: 'cluster-addons'
     spec:
       project: default
       source:
