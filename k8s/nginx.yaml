@@ -1,16 +1,14 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  labels:
-    argocd.argoproj.io/instance: workloads
-  name: gnani
+  name: nginx
 spec: {}
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: gnani
-  name: nginx-deployment
+  namespace: nginx
+  name: nginx
 spec:
   selector:
     matchLabels:
@@ -30,8 +28,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: gnani
-  name: nginx-service
+  namespace: nginx
+  name: nginx
 spec:
   ports:
     - name: http
