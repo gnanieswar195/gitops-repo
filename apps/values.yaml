@@ -1,2 +1,0 @@
-enable_kube_prometheus_stack: false
-enable_prometheus_adapter: false

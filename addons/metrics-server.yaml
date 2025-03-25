@@ -7,8 +7,13 @@ spec:
   generators:
     - clusters:
         selector:
-          matchLabels:
-            environment: dev
+          matchExpressions:
+            - key: enable_metrics_server
+              operator: In
+              values: ["true"]
+            - key: environment
+              operator: In
+              values: ["dev", "prod"]  # Matches either dev or prod
   template:
     metadata:
       name: 'metrics-server'
@@ -19,11 +24,11 @@ spec:
         repoURL: https://kubernetes-sigs.github.io/metrics-server/
         targetRevision: 3.12.2
       destination:
-        server: https://kubernetes.default.svc  # Add this line to specify the destination server
+        server: https://kubernetes.default.svc  # Ensures it deploys to the correct cluster
         namespace: kube-system
       syncPolicy:
         automated: {}
         syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true  # This handles large CRDs
-        
+

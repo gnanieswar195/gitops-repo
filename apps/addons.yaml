@@ -20,9 +20,6 @@ spec:
         repoURL: 'https://github.com/gnanieswar195/gitops-repo.git'
         path: 'addons'
         targetRevision: 'main'
-        helm:
-          valueFiles:
-            - values.yaml           
         directory:
           recurse: true
       destination:
