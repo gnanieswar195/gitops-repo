@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: longhorn
+  namespace: argocd
+spec:
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            environment: dev
+  template:
+    metadata:
+      name: 'longhorn'
+    spec:
+      project: default
+      source:
+        chart: longhorn
+        repoURL: 
+        targetRevision: 1.8.1 
+      destination:
+        server: https://kubernetes.default.svc  # Add this line to specify the destination server
+        namespace: longhorn
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true  # This handles large CRDs
+        
