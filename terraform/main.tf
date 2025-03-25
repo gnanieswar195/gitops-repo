@@ -17,8 +17,7 @@ locals {
 
   # OSS addons configuration
   oss_addons = {
-    enable_kube_prometheus_stack = true  
-    enable_prometheus_adapter    = true  
+    enable_cert_manager = true 
   }
   
   # Merge all addon categories
