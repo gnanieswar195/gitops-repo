@@ -17,7 +17,6 @@ locals {
 
   # OSS addons configuration
   oss_addons = {
-    enable_cert_manager = false
     enable_longhorn = true
   }
   

@@ -17,10 +17,15 @@ spec:
       source:
         chart: longhorn
         repoURL: https://charts.longhorn.io 
-        targetRevision: 1.8.1 
+        targetRevision: 1.8.1
+        helm:
+          values: |
+            serviceAccount:
+              create: true
+              name: longhorn-service-account        
       destination:
         server: https://kubernetes.default.svc  # Add this line to specify the destination server
-        namespace: longhorn
+        namespace: longhorn-system
       syncPolicy:
         automated: {}
         syncOptions:
