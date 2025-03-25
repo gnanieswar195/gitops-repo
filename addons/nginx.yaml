@@ -15,9 +15,9 @@ spec:
     spec:
       project: default
       source:
-        chart: bitnami/nginx
+        chart: nginx
         repoURL: https://charts.bitnami.com/bitnami
-        targetRevision: 19.0.2
+        targetRevision: "19.0.1"
       destination:
         server: https://kubernetes.default.svc  # Add this line to specify the destination server
         namespace: nginx
