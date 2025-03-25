@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: apache
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: apache
+  name: apache2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apache2
+  template:
+    metadata:
+      labels:
+        app: apache2
+    spec:
+      containers:
+      - name: apache2
+        image: httpd:latest
+        ports:
+        - containerPort: 80
+          name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: apache
+  name: apache2
+spec:
+  selector:
+    app: apache2
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      protocol: TCP
+  type: NodePort
+
