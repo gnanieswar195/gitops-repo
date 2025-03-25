@@ -16,7 +16,10 @@ locals {
   gitops_repo  = "https://github.com/gnanieswar195/gitops-repo.git"
 
   # OSS addons configuration
-  oss_addons = {}
+  oss_addons = {
+    enable_kube_prometheus_stack = false 
+    enable_prometheus_adapter    = false
+  }
   
   # Merge all addon categories
   addons = merge(
@@ -58,8 +61,14 @@ module "gitops_bridge" {
   cluster = {
     cluster_name = local.cluster_name
     environment  = local.environment
-    metadata     = local.addons_metadata
-    addons       = local.addons
-}
+    metadata     = merge(
+      {
+        repo_url  = local.gitops_repo
+        repo_path = "apps"
+      },
+      local.addons_metadata
+    )
+    addons = local.addons
+  }
   apps = local.argocd_apps
 }
