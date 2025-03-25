@@ -16,9 +16,7 @@ locals {
   gitops_repo  = "https://github.com/gnanieswar195/gitops-repo.git"
 
   # OSS addons configuration
-  oss_addons = {
-    enable_longhorn = true
-  }
+  oss_addons = {}
   
   # Merge all addon categories
   addons = merge(

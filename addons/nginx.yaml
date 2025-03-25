@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: nginx
+  namespace: argocd
+spec:
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            environment: dev
+  template:
+    metadata:
+      name: 'nginx'
+    spec:
+      project: default
+      source:
+        chart: nginx
+        repoURL: oci://registry-1.docker.io/bitnamicharts/nginx
+        targetRevision: 19.0.2
+      destination:
+        server: https://kubernetes.default.svc  # Add this line to specify the destination server
+        namespace: nginx
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true  # This handles large CRDs
+        
