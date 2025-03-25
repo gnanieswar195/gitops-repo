@@ -16,7 +16,7 @@ spec:
       project: default
       source:
         chart: longhorn
-        repoURL: 
+        repoURL: https://charts.longhorn.io 
         targetRevision: 1.8.1 
       destination:
         server: https://kubernetes.default.svc  # Add this line to specify the destination server

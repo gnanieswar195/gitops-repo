@@ -17,7 +17,8 @@ locals {
 
   # OSS addons configuration
   oss_addons = {
-    enable_cert_manager = true 
+    enable_cert_manager = false
+    enable_longhorn = true
   }
   
   # Merge all addon categories
