@@ -1,0 +1,71 @@
+provider "kubernetes" {
+  config_path = "~/.kube/config" ##Change the k8s kubeconfig path
+  config_context = "default" ##Change the Kubernetes context name
+}
+
+provider "helm" {
+  kubernetes {
+    config_path = "~/.kube/config" ##Change the k8s kubeconfig path
+    config_context = "default" ##Change the Kubernetes context name
+  }
+}
+
+locals {
+  cluster_name = "default" ##Change to the cluster-name 
+  environment  = "dev"     ##This is considered as dev for test purpose and can be changed further as per environment requirement which is passed as a label for the respective application set
+  gitops_repo  = "https://github.com/gnanieswar195/gitops-repo.git" ##This is same repo which has been considered for both Addons and workloads files, We can use a different ones as well which can be configured below
+
+  # OSS addons configuration
+  oss_addons = {
+    enable_metrics_server = true    ##Here user can select the addon that he want to enable using true or false
+    enable_kube_prometheus_stack = true
+    enable_cert_manager = false
+  }
+
+  # Merge all addon categories
+  addons = merge(
+    local.oss_addons,
+    {
+      kubernetes_version = "1.31" # Add the k8s version you're using for info purpose
+    }
+  )
+
+  # Metadata for addons
+  addons_and_workloads_metadata = merge(
+  {
+    ##Addons Metadata
+    cluster_name = local.cluster_name
+    environment  = local.environment
+    addons_repo_url = local.gitops_repo
+    addons_repo_basepath = ""
+    addons_repo_path = "addons"   ##This is the path which contains the addons which user selected in oss_addons to deploy (To be managed by us, based upon user input value true or false addon will be installed)
+    addons_repo_revision = "main" ##This is the branch from which addons to be fetched 
+  },
+  {
+    ##Workloads Metadata
+    workload_repo_url      = local.gitops_repo
+    workload_repo_basepath = ""
+    workload_repo_path     = "k8s" ##This is the path which contains the kubernetes manifests which user selected in oss_addons to deploy using argocd (To be Managed by user)
+    workload_repo_revision = "main"(To be Managed by user)
+  }
+  )
+
+  # Define ArgoCD applications - including the addons and workloads ApplicationSet
+  argocd_apps = {
+    addons = file("${path.module}/../apps/addons.yaml") ##This is the common applicationset for addons and will be deployed by terraform onto cluster, this will act as a Main Application set for addons, but based upon the user values in oss_addons, addons will be deployed.
+    workloads = file("${path.module}/../apps/workloads.yaml") ##This is the common applicationset for which will be deployed by terraform onto cluster.
+  }
+}
+
+module "gitops_bridge" {
+  source = "gitops-bridge-dev/gitops-bridge/helm"
+
+  cluster = {
+    cluster_name = local.cluster_name
+    environment  = local.environment
+    metadata     = local.addons_metadata
+    addons = local.addons
+  }
+  apps = local.argocd_apps
+}
+
