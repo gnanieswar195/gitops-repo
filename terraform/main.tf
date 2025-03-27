@@ -26,21 +26,21 @@ locals {
   addons = merge(
     local.oss_addons,
     {
-      kubernetes_version = "1.31" # Add the k8s version you're using
+      kubernetes_version = "1.31" # Add the k8s version you're using, just for info purpose
     }
   )
   
-  # Metadata for addons
-  addons_metadata = merge( 
-  {
-    cluster_name = local.cluster_name
-    environment  = local.environment
+  # Metadata for addons and workloads
+  addons_and_workloads_metadata = merge( 
+  { 
+    ##Addons metadata
     addons_repo_url = local.gitops_repo
     addons_repo_basepath = ""
     addons_repo_path = "addons"
     addons_repo_revision = "main"
   },
   {
+    ##Workloads metadata
     workload_repo_url      = local.gitops_repo
     workload_repo_basepath = ""
     workload_repo_path     = "k8s"
@@ -61,14 +61,8 @@ module "gitops_bridge" {
   cluster = {
     cluster_name = local.cluster_name
     environment  = local.environment
-    metadata     = merge(
-      {
-        repo_url  = local.gitops_repo
-        repo_path = "apps"
-      },
-      local.addons_metadata
-    )
-    addons = local.addons
+    metadata     = local.addons_and_workloads_metadata
+    addons       = local.addons
   }
   apps = local.argocd_apps
 }
